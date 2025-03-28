@@ -19,6 +19,9 @@ const Quiz = () => {
   }
 
   const handlePrev = () => {
+    if (index == 0) {
+      setDisabled(true)
+    }
     setIndex(index - 1);
     setColor('default')
   };
@@ -82,7 +85,7 @@ const Quiz = () => {
 
   return (
     <>
-      <div className="flex justify-center items-center min-h-screen bg-black p-4">
+      <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-black via-yellow-300 to-red-400 p-4">
         <div className="w-full max-w-lg p-6 bg-yellow-200 shadow-lg rounded-lg border border-black text-center">
           {/* Question Number */}
           <div className="text-gray-500 text-sm font-medium"> </div>
@@ -120,7 +123,8 @@ const Quiz = () => {
           {/* Navigation Buttons */}
           <div className="mt-6 flex justify-between items-center">
             <button className="px-6 py-3 text-white font-semibold bg-blue-600 hover:bg-blue-700 rounded-md transition hover:cursor-pointer"
-              onClick={handlePrev}>
+              onClick={handlePrev}
+              disabled={disabled}>
               Previous
             </button>
 
