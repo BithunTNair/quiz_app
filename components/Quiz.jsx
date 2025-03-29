@@ -4,18 +4,20 @@ import { Data } from '../questions/questions'
 const Quiz = () => {
   const [data] = useState(Data);
   const [index, setIndex] = useState(0);
-  const [color, setColor] = useState('default');
+  const [color, setColor] = useState([]);
+  const [green, setGreen] = useState('')
   const [isClicked, setIsClicked] = useState(false);
   const [disabled, setDisabled] = useState(false);
   // const [prevDisabled, setPrevDisabled] = useState(false)
   const [score, setScore] = useState(0);
-  const [correctAnswer, setCorrectAnswer] = useState('')
+
 
   const handleNext = () => {
     if (index === 8) {
       setDisabled(true)
     }
     setColor('default');
+    setGreen('')
     setIsClicked(false);
     setIndex(index + 1);
   }
@@ -101,17 +103,21 @@ const Quiz = () => {
     displayAnswer(crctAnswer)
 
   };
-  const displayAnswer=(answer)=>{
-    if(answer==0){
-      setColor('green_a')
-    }else if(answer==1){
-      setColor('green_b')
+  const displayAnswer = (answer) => {
+    if (answer == 0) {
+      setGreen('green_a')
+    } else if (answer == 1) {
+      setGreen('green_b')
+    } else if (answer == 2) {
+      setGreen('green_c')
+    } else if (answer == 3) {
+      setGreen('green_d')
     }
   }
   return (
     <>
-      <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-black via-yellow-300 to-red-400 p-4">
-        <div className="w-full max-w-lg p-6 bg-yellow-200 shadow-lg rounded-lg border border-black text-center">
+      <div className="flex justify-center items-center min-h-screen bg-gradient-to-tl from-gray-800 via-blue-700 to-gray-900 p-4">
+        <div className="w-full max-w-lg p-6 bg-linear-to-r from-blue-200 via-blue-400 to-blue-600 shadow-lg rounded-lg border border-black text-center">
           {/* Question Number */}
           <div className="text-gray-500 text-sm font-medium"> </div>
           {/* Question */}
@@ -120,25 +126,25 @@ const Quiz = () => {
           </h2>
           {/* Options */}
           <div className="mt-6 space-y-3">
-            <button disabled={isClicked} className={`w-full px-4 py-3 border rounded-md text-left ${color === 'green_a' ? "bg-green-400  animate-pulse border-none" : color === "red_a" ? "bg-red-400  animate-pulse border-none" : "bg-gray-50"} hover:cursor-pointer`}
+            <button disabled={isClicked} className={`w-full px-4 py-3 border rounded-md text-left ${color === 'green_a' || green === 'green_a' ? "bg-green-400  animate-pulse border-none" : color === "red_a" ? "bg-red-400  animate-pulse border-none" : "bg-gray-50"} hover:cursor-pointer`}
               id={1}
               value={data[index].options[0]}
               onClick={aIsCorrect} >
               A. {data[index].options[0]}
             </button>
-            <button disabled={isClicked} className={`w-full px-4 py-3 border rounded-md text-left ${color === 'green_b' ? "bg-green-400  animate-pulse border-none" : color === "red_b" ? "bg-red-400  animate-pulse border-none" : "bg-gray-50"} hover:cursor-pointer`}
+            <button disabled={isClicked} className={`w-full px-4 py-3 border rounded-md text-left ${color === 'green_b' || green === 'green_b' ? "bg-green-400  animate-pulse border-none" : color === "red_b" ? "bg-red-400  animate-pulse border-none" : "bg-gray-50"} hover:cursor-pointer`}
               id={2}
               onClick={bIsCorrect}
               value={data[index].options[1]}>
               B. {data[index].options[1]}
             </button>
-            <button disabled={isClicked} className={`w-full px-4 py-3 border rounded-md text-left ${color === 'green_c' ? "bg-green-400  animate-pulse border-none" : color === "red_c" ? "bg-red-400  animate-pulse border-none" : "bg-gray-50"} hover:cursor-pointer`}
+            <button disabled={isClicked} className={`w-full px-4 py-3 border rounded-md text-left ${color === 'green_c' || green === 'green_c' ? "bg-green-400  animate-pulse border-none" : color === "red_c" ? "bg-red-400  animate-pulse border-none" : "bg-gray-50"} hover:cursor-pointer`}
               id={3}
               onClick={cIsCorrect}
               value={data[index].options[2]} >
               C. {data[index].options[2]}
             </button>
-            <button disabled={isClicked} className={`w-full px-4 py-3 border rounded-md text-left ${color === 'green_d' ? "bg-green-400  animate-pulse border-none" : color === "red_d" ? "bg-red-400  animate-pulse border-none" : "bg-gray-50"} hover:cursor-pointer`}
+            <button disabled={isClicked} className={`w-full px-4 py-3 border rounded-md text-left ${color === 'green_d' || green === 'green_d' ? "bg-green-400  animate-pulse border-none" : color === "red_d" ? "bg-red-400  animate-pulse border-none" : "bg-gray-50"} hover:cursor-pointer`}
               id={4}
               onClick={dIsCorrect}
               value={data[index].options[3]}>

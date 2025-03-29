@@ -6,15 +6,15 @@ const LandingPage = () => {
     const navigate=useNavigate()
   return (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white p-4">
-    <div className="text-center max-w-lg bg-white bg-opacity-10 p-8 rounded-lg shadow-xl">
+    <div className="text-center max-w-lg bg-gradient-to-br from-pink-200 via-purple-400 to-indigo-600 bg-opacity-10 p-8 rounded-lg shadow-xl">
       <h1 className="text-4xl font-bold mb-4 text-black">Welcome to the Quiz Section</h1>
-      <p className="text-lg text-gray-800 mb-6">
+      <p className="text-lg text-gray-800 mb-6 font-semibold">
         Test your knowledge and challenge yourself with exciting questions.
         Are you ready to start?
       </p>
       <button
-        onClick={()=>navigate('/quiz')}
-        className="px-6 py-3 text-lg font-semibold bg-yellow-400 text-black rounded-full shadow-md hover:bg-yellow-500 transition duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-yellow-300"
+        onClick={()=>navigate('/select_difficulty')}
+        className="px-6 py-3 text-lg font-semibold bg-yellow-400 text-black rounded-full shadow-md hover:bg-yellow-500 transition duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-yellow-300 hover:cursor-pointer"
       >
         Start Quiz 🚀
       </button>
