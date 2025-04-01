@@ -8,8 +8,8 @@ const MediumLevel = () => {
   const [green, setGreen] = useState('')
   const [isClicked, setIsClicked] = useState(false);
   const [disabled, setDisabled] = useState(false);
-  // const [prevDisabled, setPrevDisabled] = useState(false)
   const [score, setScore] = useState(0);
+  const [selectedAns, setSelectedAns] = useState([])
 
 
   const handleNext = () => {
@@ -25,17 +25,14 @@ const MediumLevel = () => {
   const handlePrev = () => {
     if (index > 0) {
       setIndex(index - 1);
-      console.log(index);
       setDisabled(false)
       setColor('default');
-      setIsClicked(false)
+      setIsClicked(false);
+      setGreen('');
+
     }
-    // if (index - 1 === 0) {
-    //   setPrevDisabled(true)
-    // }
   };
   const aIsCorrect = (e) => {
-    console.log(e.target.value);
     const answer = e.target.value;
     const id = e.target.id
     if (answer === data[index].correctAnswer && id == 1) {
@@ -45,14 +42,16 @@ const MediumLevel = () => {
       setColor('red_a');
       checkAnswer(data[index].options)
     };
-    setIsClicked(true)
+    setIsClicked(true);
+    setSelectedAns([...selectedAns, answer]);
+    console.log(selectedAns);
   };
 
   const bIsCorrect = (e) => {
     console.log(e.target.value);
 
     const answer = e.target.value;
-    console.log(answer);
+    // console.log(answer);
 
     const id = e.target.id
     if (answer === data[index].correctAnswer && id == 2) {
@@ -62,7 +61,9 @@ const MediumLevel = () => {
       setColor('red_b');
       checkAnswer(data[index].options)
     };
-    setIsClicked(true)
+    setIsClicked(true);
+    setSelectedAns([...selectedAns, answer]);
+    console.log(selectedAns);
   };
   const cIsCorrect = (e) => {
     const answer = e.target.value;
@@ -74,7 +75,9 @@ const MediumLevel = () => {
       setColor('red_c');
       checkAnswer(data[index].options)
     };
-    setIsClicked(true)
+    setIsClicked(true);
+    setSelectedAns([...selectedAns, answer]);
+    console.log(selectedAns);
   };
   const dIsCorrect = (e) => {
     const answer = e.target.value;
@@ -86,11 +89,13 @@ const MediumLevel = () => {
       setColor('red_d');
       checkAnswer(data[index].options);
     };
-    setIsClicked(true)
+    setIsClicked(true);
+    setSelectedAns([...selectedAns, answer]);
+    console.log(selectedAns);
   };
   const checkAnswer = (options) => {
-    console.log(options);
-    console.log(data);
+    // console.log(options);
+    // console.log(data);
 
     let crctAnswer = ''
     for (let i = 0; i < options.length; i++) {
@@ -99,7 +104,7 @@ const MediumLevel = () => {
         // setCorrectAnswer(crctAnswer)
       }
     }
-    console.log(crctAnswer);
+    // console.log(crctAnswer);
     displayAnswer(crctAnswer)
 
   };
@@ -121,11 +126,10 @@ const MediumLevel = () => {
           {/* Question Number */}
           {/* Score Section - Centered Above Question */}
           <div className="flex justify-center items-center mb-4">
-            <div className="text-black font-semibold text-lg bg-green-300 px-4 py-2 rounded-md shadow-md">
+            <div className="text-white font-semibold text-lg bg-blue-500 px-4 py-2 rounded-md shadow-md">
               Score: {score}/10
             </div>
           </div>
-          <div className="text-gray-500 text-sm font-medium"> </div>
           {/* Question */}
           <h2 className="mt-2 text-2xl font-semibold text-black">
             {data[index].id}  {' .'}  {data[index].question}

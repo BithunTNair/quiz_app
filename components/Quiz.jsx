@@ -8,7 +8,6 @@ const Quiz = () => {
   const [green, setGreen] = useState('')
   const [isClicked, setIsClicked] = useState(false);
   const [disabled, setDisabled] = useState(false);
-  // const [prevDisabled, setPrevDisabled] = useState(false)
   const [score, setScore] = useState(0);
   const [selectedAns,setSelectedAns]=useState([])
 
@@ -28,13 +27,10 @@ const Quiz = () => {
       setIndex(index - 1);
       setDisabled(false)
       setColor('default');
-      setIsClicked(true);
+      setIsClicked(false);
       setGreen('');
 
     }
-    // if (index - 1 === 0) {
-    //   setPrevDisabled(true)
-    // }
   };
   const aIsCorrect = (e) => {
     const answer = e.target.value;
@@ -49,8 +45,6 @@ const Quiz = () => {
     setIsClicked(true);
     setSelectedAns([...selectedAns,answer]);
     console.log(selectedAns);
-    
-
   };
 
   const bIsCorrect = (e) => {
@@ -132,7 +126,7 @@ const Quiz = () => {
           {/* Question Number */}
           {/* Score Section - Centered Above Question */}
           <div className="flex justify-center items-center mb-4">
-            <div className="text-black font-semibold text-lg bg-green-300 px-4 py-2 rounded-md shadow-md">
+            <div className="text-white font-semibold text-lg bg-blue-500 px-4 py-2 rounded-md shadow-md">
               Score: {score}/10
             </div>
           </div>
