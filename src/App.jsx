@@ -1,7 +1,7 @@
 
 import Quiz from '../components/Quiz'
 import LandingPage from '../components/LandingPage'
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import SelectDifficulty from '../components/SelectDifficulty';
 import MediumLevel from '../components/MediumLevel';
 import HardLevel from '../components/HardLevel';

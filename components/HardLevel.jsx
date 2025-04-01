@@ -114,6 +114,12 @@ const HardLevel = () => {
             <div className="flex justify-center items-center min-h-screen bg-gradient-to-tl from-gray-800 via-blue-700 to-gray-900 p-4">
                 <div className="w-full max-w-lg p-6 bg-linear-to-r from-blue-200 via-blue-400 to-blue-600 shadow-lg rounded-lg border border-black text-center">
                     {/* Question Number */}
+                    {/* Score Section - Centered Above Question */}
+                    <div className="flex justify-center items-center mb-4">
+                        <div className="text-black font-semibold text-lg bg-green-300 px-4 py-2 rounded-md shadow-md">
+                            Score: {score}/10
+                        </div>
+                    </div>
                     <div className="text-gray-500 text-sm font-medium"> </div>
                     {/* Question */}
                     <h2 className="mt-2 text-2xl font-semibold text-black">
@@ -153,13 +159,6 @@ const HardLevel = () => {
                             disabled={''}>
                             Previous
                         </button>
-
-                        {/* Score Section Centered */}
-                        <div className="flex-grow flex items-center justify-center">
-                            <div className="text-black font-semibold text-lg bg-green-300 px-4 py-2 rounded-md shadow-md">
-                                Score: {score}{'/10'}
-                            </div>
-                        </div>
                         <button className="px-6 py-3 text-white font-semibold bg-blue-600 hover:bg-blue-700 rounded-md transition hover:cursor-pointer"
                             onClick={handleNext}
                             disabled={disabled}>
