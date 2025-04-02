@@ -1,17 +1,20 @@
-import React, { useState } from 'react'
-import { Data } from '../questions/questions'
+import React, { useEffect, useState } from 'react'
+import { EasyQuestions } from '../questions/questions'
+import { HardQuestions } from '../questions/advanced_qstns'
+import { moderateQuestions } from '../questions/moderate_qstns'
 
-const Quiz = () => {
-  const [data] = useState(Data);
+const Quiz = ({ Difficulty }) => {
+  const data = Difficulty === 'easy' ? EasyQuestions : Difficulty === 'medium' ? moderateQuestions : HardQuestions
   const [index, setIndex] = useState(0);
   const [color, setColor] = useState([]);
   const [green, setGreen] = useState('')
   const [isClicked, setIsClicked] = useState(false);
-  const [disabled, setDisabled] = useState(false);
+  const [disabled, setDisabled] = useState(true);
   const [score, setScore] = useState(0);
-  const [selectedAns,setSelectedAns]=useState([])
-
-
+  const [selectedAns, setSelectedAns] = useState([]);
+  const [timer, setTimer] = useState(10);
+  const [scoreColor, setScoreColor] = useState('');
+  const [timerCol, setTimerCol] = useState('');
   const handleNext = () => {
     if (index === 8) {
       setDisabled(true)
@@ -20,18 +23,42 @@ const Quiz = () => {
     setGreen('')
     setIsClicked(false);
     setIndex(index + 1);
-  }
-
-  const handlePrev = () => {
-    if (index > 0) {
-      setIndex(index - 1);
-      setDisabled(false)
-      setColor('default');
-      setIsClicked(false);
-      setGreen('');
-
-    }
   };
+  useEffect(() => {
+    setTimer(10);
+    setDisabled(true)
+    let time = setInterval(() => {
+      setTimer((prevTime) => {
+        if (prevTime <= 1) {
+          clearInterval(time);
+          setDisabled(false);
+          setIsClicked(true);
+          checkAnswer(data[index].options)
+          return 0;
+        }
+        return prevTime - 1;
+      });
+    }, 1000);
+    return () => clearInterval(time)
+  }, [index]);
+  useEffect(() => {
+    if (score <= 4) {
+      setScoreColor('red')
+    } else if (score <= 7) {
+      setScoreColor('yellow')
+    } else {
+      setScoreColor('green')
+    }
+  }, [score]);
+  useEffect(() => {
+    if (timer >= 6) {
+      setTimerCol('green')
+    } else if (timer >= 4) {
+      setTimerCol('yellow');
+    } else {
+      setTimerCol('red')
+    }
+  }, [timer])
   const aIsCorrect = (e) => {
     const answer = e.target.value;
     const id = e.target.id
@@ -43,16 +70,11 @@ const Quiz = () => {
       checkAnswer(data[index].options)
     };
     setIsClicked(true);
-    setSelectedAns([...selectedAns,answer]);
-    console.log(selectedAns);
+    setDisabled(false)
+    setSelectedAns([...selectedAns, answer]);
   };
-
   const bIsCorrect = (e) => {
-    console.log(e.target.value);
-
     const answer = e.target.value;
-    // console.log(answer);
-
     const id = e.target.id
     if (answer === data[index].correctAnswer && id == 2) {
       setColor('green_b');
@@ -62,8 +84,8 @@ const Quiz = () => {
       checkAnswer(data[index].options)
     };
     setIsClicked(true);
-    setSelectedAns([...selectedAns,answer]);
-    console.log(selectedAns);
+    setDisabled(false)
+    setSelectedAns([...selectedAns, answer]);
   };
   const cIsCorrect = (e) => {
     const answer = e.target.value;
@@ -76,8 +98,8 @@ const Quiz = () => {
       checkAnswer(data[index].options)
     };
     setIsClicked(true);
-    setSelectedAns([...selectedAns,answer]);
-    console.log(selectedAns);
+    setSelectedAns([...selectedAns, answer]);
+    setDisabled(false)
   };
   const dIsCorrect = (e) => {
     const answer = e.target.value;
@@ -90,23 +112,17 @@ const Quiz = () => {
       checkAnswer(data[index].options);
     };
     setIsClicked(true);
-    setSelectedAns([...selectedAns,answer]);
-    console.log(selectedAns);
+    setSelectedAns([...selectedAns, answer]);
+    setDisabled(false)
   };
   const checkAnswer = (options) => {
-    // console.log(options);
-    // console.log(data);
-
     let crctAnswer = ''
     for (let i = 0; i < options.length; i++) {
       if (data[index].correctAnswer === options[i]) {
         crctAnswer = i;
-        // setCorrectAnswer(crctAnswer)
       }
     }
-    // console.log(crctAnswer);
-    displayAnswer(crctAnswer)
-
+    displayAnswer(crctAnswer);
   };
   const displayAnswer = (answer) => {
     if (answer == 0) {
@@ -125,9 +141,12 @@ const Quiz = () => {
         <div className="w-full max-w-lg p-6 bg-linear-to-r from-blue-200 via-blue-400 to-blue-600 shadow-lg rounded-lg border border-black text-center">
           {/* Question Number */}
           {/* Score Section - Centered Above Question */}
-          <div className="flex justify-center items-center mb-4">
+          <div className="flex justify-between items-center mb-4">
             <div className="text-white font-semibold text-lg bg-blue-500 px-4 py-2 rounded-md shadow-md">
-              Score: {score}/10
+              Time Left : <span className={`${timerCol === 'red' ? 'text-red-500' : timerCol === 'yellow' ? 'text-yellow-500' : timerCol === 'green' ? 'text-green-500' : 'text-white'}`} >  {timer} </span>
+            </div>
+            <div className="text-white font-semibold text-lg bg-blue-500 px-4 py-2 rounded-md shadow-md">
+              Score: <span className={`${scoreColor === 'red' ? 'text-red-500' : scoreColor === 'yellow' ? 'text-yellow-500' : scoreColor === 'green' ? 'text-green-500' : 'text-black'}`} >  {score}/10 </span>
             </div>
           </div>
           {/* Question */}
@@ -162,12 +181,7 @@ const Quiz = () => {
             </button>
           </div>
           {/* Navigation Buttons */}
-          <div className="mt-6 flex justify-between items-center">
-            <button className="px-6 py-3 text-white font-semibold bg-blue-600 hover:bg-blue-700 rounded-md transition hover:cursor-pointer"
-              onClick={handlePrev}
-              disabled={''}>
-              Previous
-            </button>
+          <div className="mt-6 flex justify-center items-center">
             <button className="px-6 py-3 text-white font-semibold bg-blue-600 hover:bg-blue-700 rounded-md transition hover:cursor-pointer"
               onClick={handleNext}
               disabled={disabled}>
