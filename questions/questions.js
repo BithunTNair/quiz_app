@@ -1,13 +1,9 @@
 export const EasyQuestions = [
   {
-    id:1,
-    question: 'When was my dear friend Maya born ?',
-    options:['2005-Dec-4','2010 Jan-15','2000-May-22','2001-May-22'],
-    correctAnswer:'2000-May-22'
-    // id: 1,
-    // question: "Who is known as the Father of the Nation in India?",
-    // options: ["Jawaharlal Nehru", "Mahatma Gandhi", "Sardar Patel", "Subhas Chandra Bose"],
-    // correctAnswer: "Mahatma Gandhi",
+    id: 1,
+    question: "Who is known as the Father of the Nation in India?",
+    options: ["Jawaharlal Nehru", "Mahatma Gandhi", "Sardar Patel", "Subhas Chandra Bose"],
+    correctAnswer: "Mahatma Gandhi",
   },
   {
     id: 2,
