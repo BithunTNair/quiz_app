@@ -16,13 +16,14 @@ const Quiz = ({ Difficulty }) => {
   const [scoreColor, setScoreColor] = useState('');
   const [timerCol, setTimerCol] = useState('');
   const handleNext = () => {
-    if (index === 8) {
-      setDisabled(true)
+    if (index < data.length-1) {
+      setDisabled(true);
+      setColor('default');
+      setGreen('')
+      setIsClicked(false);
+      setIndex(index + 1);
     }
-    setColor('default');
-    setGreen('')
-    setIsClicked(false);
-    setIndex(index + 1);
+   
   };
   useEffect(() => {
     setTimer(10);
